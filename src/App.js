@@ -2,7 +2,11 @@ import './App.css';
 import List from './List';
 import Search from './Search';
 import React from 'react';
-
+import ConditionalRendering from './components/ConditionalRendering';
+import {RiLoginCircleFill,RiLogoutCircleRFill} from 'react-icons/ri'
+import { Section } from './styles/Sections.styled';
+import Container from './styles/Container.styled';
+import ControlledComponent from './components/ControlledComponent';
 function App() {
 
   // let stories = [
@@ -70,13 +74,23 @@ function App() {
     console.log(event.target.name)
   }
 
-  return (
+  const [loggedIn,setLoggedIn] = React.useState(false)
+  return ([
     <div className="App">
       {/* <Search onSearch={handleSearch} search={searchTerm}/>
       <List stories={searchedStories}/> */}
       <input type="text" id='firstName' onChange={handleChange} name="firstName" placeholder='First Name'/>
       <input type="text" id='lastName' onChange={handleChange} name="lastName" placeholder='Last Name'/>
-    </div>
+    </div>,
+    <ConditionalRendering isLoggedIn={loggedIn}/>,
+    <Section>
+      <Container>
+      <button onClick={() => setLoggedIn((prevState) => !prevState) } className='button'>{loggedIn ? <RiLoginCircleFill className='icon'/> : <RiLogoutCircleRFill className='icon'/>}</button>
+      <ControlledComponent/>
+      </Container>
+    </Section>
+    
+  ]
   );
 }
 
